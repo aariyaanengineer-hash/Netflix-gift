@@ -49,4 +49,16 @@ body, html {
     object-fit: cover; 
     z-index: 1; /* Sits directly beneath your floating text overlay */
 }
+#main-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the image perfectly */
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ensures the whole photo fits without cropping */
+    z-index: 1; /* Sits behind your text layout */
+}
 /* Style your header text alignments and movie details positions at bottom left here */
