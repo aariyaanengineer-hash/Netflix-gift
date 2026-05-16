@@ -41,38 +41,23 @@ document.getElementById('main-profile').addEventListener('click', function() {
 
 function loadMedia(index) {
     const videoPlayer = document.getElementById('main-video');
-    const imageContainer = document.getElementById('video-screen'); 
+    const imageContainer = document.getElementById('main-image'); 
     const currentFile = myPlaylist[index];
     
     clearTimeout(imageTimeout);
 
     // Simple extension match checking
-    if (currentFile.toLowerCase().endsWith('.jpeg') || currentFile.toLowerCase().endsWith('.jpg') || currentFile.toLowerCase().endsWith('.png')) {
-        videoPlayer.style.display = "none"; 
-        videoPlayer.pause();
-        
-        imageContainer.style.backgroundImage = `url('${currentFile}')`;
-        imageContainer.style.backgroundSize = "cover";
-        imageContainer.style.backgroundPosition = "center";
-
-        imageTimeout = setTimeout(nextMedia, 4000);
-    } else {
-        imageContainer.style.backgroundImage = "none"; 
-        videoPlayer.style.display = "block"; 
-        
-        videoPlayer.src = currentFile;
-        videoPlayer.muted = true; // Force muted to guarantee browser layout playback authorization
-        
-        videoPlayer.play()
-            .then(() => {
-                videoPlayer.muted = false; // Safely toggle back audio track on successful render
-            })
-            .catch(error => {
-                console.error("Playback error detail:", error);
-                // Print the exact system path error right onto the layout text to diagnose filename typos instantly
-                document.querySelector('.description').innerHTML = `Error opening file: <b>${currentFile}</b>. Check capitalization!`;
-            });
-    }
+#main-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the image perfectly */
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ensures the whole photo fits without cropping */
+    z-index: 1; /* Sits behind your text layout */
 }
 
 function nextMedia() {
