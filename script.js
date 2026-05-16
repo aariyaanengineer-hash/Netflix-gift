@@ -15,7 +15,7 @@ const myPlaylist = [
     "SENOPHOTO15.jpeg",
     "SENOPHOTO14.jpeg",
     "SENOPHOTO10.jpeg",
-    "SENOPHOTO09.jpeg", // Double check if your folder has a '0' here (e.g., SENOPHOTO09)
+    "SENOPHOTO9.jpeg", // Double check if your folder has a '0' here (e.g., SENOPHOTO09)
     "SENOVID1.mp4"
 ];
 
