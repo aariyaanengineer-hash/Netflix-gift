@@ -61,4 +61,17 @@ body, html {
     object-fit: contain; /* Ensures the whole photo fits without cropping */
     z-index: 1; /* Sits behind your text layout */
 }
+/* Create a smooth fade-in class */
+.fade-in-media {
+    animation: netflixFade 0.8s ease-in-out forwards;
+}
+
+@keyframes netflixFade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 /* Style your header text alignments and movie details positions at bottom left here */
