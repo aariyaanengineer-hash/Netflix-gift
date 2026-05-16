@@ -45,6 +45,10 @@ function loadMedia(index) {
     
     clearTimeout(imageTimeout);
 
+    // Remove the fade animation class first so we can re-trigger it cleanly
+    imagePlayer.classList.remove('fade-in-media');
+    videoPlayer.classList.remove('fade-in-media');
+
     // 1. Handle Photos
     if (currentFile.toLowerCase().endsWith('.jpeg') || currentFile.toLowerCase().endsWith('.jpg') || currentFile.toLowerCase().endsWith('.png')) {
         videoPlayer.style.display = "none"; 
@@ -52,6 +56,10 @@ function loadMedia(index) {
         
         imagePlayer.src = currentFile;
         imagePlayer.style.display = "block"; 
+        
+        // Trigger the smooth fade-in
+        void imagePlayer.offsetWidth; // Clever browser trick to force an animation restart
+        imagePlayer.classList.add('fade-in-media');
 
         imageTimeout = setTimeout(nextMedia, 4000); // Plays photo for 4 seconds
     } 
@@ -62,11 +70,15 @@ function loadMedia(index) {
         
         videoPlayer.style.display = "block"; 
         videoPlayer.src = currentFile;
-        videoPlayer.muted = true; // Required to bypass browser autoplay blocks
+        videoPlayer.muted = true; 
+        
+        // Trigger the smooth fade-in for the video player element
+        void videoPlayer.offsetWidth;
+        videoPlayer.classList.add('fade-in-media');
         
         videoPlayer.play()
             .then(() => {
-                videoPlayer.muted = false; // Unmutes once playing smoothly
+                videoPlayer.muted = false; 
             })
             .catch(error => {
                 console.error("Playback issue:", error);
