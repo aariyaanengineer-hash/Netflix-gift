@@ -8,10 +8,8 @@
 </head>
 <body>
 
-    <!-- Audio Element -->
     <audio id="tudum-sound" src="tudum.mp3"></audio>
 
-    <!-- SCREEN 1: Profile Selection -->
     <div id="profile-screen" class="screen">
         <h1>Who's watching?</h1>
         <div class="profile-container">
@@ -24,29 +22,30 @@
         </div>
     </div>
 
-    <!-- SCREEN 2: The Video & UI Main Dashboard -->
     <div id="video-screen" class="hidden">
-        <video id="main-video" autoplay muted playsinline></video>
-        <!-- Background Video Loop -->
-        <img id="main-image" src="" alt="Memory Photo" style="display: none;">
-
-    <div class="movie-details">
-        </div>
-</div>
         
-        <!-- Netflix Overlays -->
+        <video id="main-video" autoplay muted playsinline></video>
+        <img id="main-image" src="" alt="Memory Photo" style="display: none;">
+        
         <div class="netflix-header">
             <span class="logo">N</span>
-            <nav><span>Home</span> <span>Movies</span> <span>My List</span></nav>
+            <nav>
+                <span>Home</span> 
+                <span>Movies</span> 
+                <span>My List</span>
+            </nav>
         </div>
 
         <div class="movie-details">
             <h1 class="movie-title">Our Memories</h1>
-            <p class="metadata"><span class="match">99% Match</span> <span>2026</span> <span class="hd">4K Ultra HD</span></p>
+            <p class="metadata">
+                <span class="match">99% Match</span> 
+                <span>2026</span> 
+                <span class="hd">4K Ultra HD</span>
+            </p>
             <p class="description">A compilation of special moments curated just for you.</p>
         </div>
-    </div>
 
-    <script src="script.js"></script>
+    </div> <script src="script.js"></script>
 </body>
 </html>
