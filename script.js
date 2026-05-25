@@ -45,9 +45,11 @@ function loadMedia(index) {
     
     clearTimeout(imageTimeout);
 
-    // Remove the fade animation class first so we can re-trigger it cleanly
-    imagePlayer.classList.remove('fade-in-media');
-    videoPlayer.classList.remove('fade-in-media');
+    // Ensure elements have the transition class applied and start them as hidden (invisible)
+    imagePlayer.classList.add('media-fade');
+    videoPlayer.classList.add('media-fade');
+    imagePlayer.classList.add('media-hidden');
+    videoPlayer.classList.add('media-hidden');
 
     // 1. Handle Photos
     if (currentFile.toLowerCase().endsWith('.jpeg') || currentFile.toLowerCase().endsWith('.jpg') || currentFile.toLowerCase().endsWith('.png')) {
@@ -57,11 +59,13 @@ function loadMedia(index) {
         imagePlayer.src = currentFile;
         imagePlayer.style.display = "block"; 
         
-        // Trigger the smooth fade-in
-        void imagePlayer.offsetWidth; // Clever browser trick to force an animation restart
-        imagePlayer.classList.add('fade-in-media');
+        // Let the browser register the source change, then gently fade it in
+        setTimeout(() => {
+            imagePlayer.classList.remove('media-hidden');
+        }, 50);
 
-        imageTimeout = setTimeout(nextMedia, 4000); // Plays photo for 4 seconds
+        // Play photo for 4 seconds, then trigger the smooth fade-out transition
+        imageTimeout = setTimeout(triggerFadeOut, 4000);
     } 
     // 2. Handle Videos
     else {
@@ -72,27 +76,40 @@ function loadMedia(index) {
         videoPlayer.src = currentFile;
         videoPlayer.muted = true; 
         
-        // Trigger the smooth fade-in for the video player element
-        void videoPlayer.offsetWidth;
-        videoPlayer.classList.add('fade-in-media');
-        
         videoPlayer.play()
             .then(() => {
                 videoPlayer.muted = false; 
+                // Gently fade the video window in once playback begins smoothly
+                videoPlayer.classList.remove('media-hidden');
             })
             .catch(error => {
                 console.error("Playback issue:", error);
+                // If video gets blocked, skip to next asset seamlessly
+                triggerFadeOut();
             });
     }
+}
+
+// Step A: Make the active media layer melt away cleanly
+function triggerFadeOut() {
+    const videoPlayer = document.getElementById('main-video');
+    const imagePlayer = document.getElementById('main-image');
+
+    imagePlayer.classList.add('media-hidden');
+    videoPlayer.classList.add('media-hidden');
+
+    // Step B: Wait exactly 800ms for the fade-out transition to complete before calculating the next index
+    setTimeout(nextMedia, 800);
 }
 
 function nextMedia() {
     currentMediaIndex++;
     if (currentMediaIndex >= myPlaylist.length) {
-        currentMediaIndex = 0; // Loops back to the start of the playlist
+        currentMediaIndex = 0; // Loop back around to the beginning cleanly
     }
     loadMedia(currentMediaIndex);
 }
 
-// Listens for the video to finish naturally to trigger the next media item
-document.getElementById('main-video').addEventListener('ended', nextMedia);
+// Instead of cutting instantly when a video ends, fade it out smoothly first!
+document.getElementById('main-video').removeEventListener('ended', nextMedia); // Clear any old direct bindings
+document.getElementById('main-video').addEventListener('ended', triggerFadeOut);
